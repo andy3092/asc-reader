@@ -8,19 +8,19 @@ netCDF files.
 
 There is a simple function to read the header.
 
+```
 import asc_reader
 
 header = asc_reader.read_header('../data/test_data.asc')
 
-# then you can access the header
 header.cellsize
 0.05
 header.ncols
 3
 header.nrows
 3
- 
-UInformation you can access.
+```
+Information you can access.
 
 headr.ncols
 header.nrows
