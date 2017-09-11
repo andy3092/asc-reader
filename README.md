@@ -38,10 +38,10 @@ Data can be loaded into numpy using the following code np.loadtxt, then it can b
 
 ```
 from netCDF4 import Dataset
-netcdf_file = Dataset("test1.nc", "a")
-time_variable[0] = 0
+netcdf_file = Dataset("my_netcdf.nc", "a")
+netcdf_file.variables['time'][0] = 0
 data = np.loadtxt('filename', skiprows=6)
-my_variable[0,:,:] = data
+netcdf_file.variables['my_variable'][0,:,:] = data
 netcdf_file.close()
 ```
 
