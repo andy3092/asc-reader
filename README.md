@@ -3,10 +3,8 @@ Reads in asc grid files acts as a simple driver that parses ascii grid data.
 Mainly used to read in the asc header data to.
 
 The script was written to access the header and to calculate the upper right
-corner centre of a grid. Then this is used with nupmy to load the data into
-netCDF files.
-
-There is a simple function to read the header.
+corner centre of a grid. Some information form the header is particularily useful when setting up NetCdf files. e.g. number of rows and coloumns ect.
+There is a simple function to read the header and spits out a named tuple.
 
 ```
 import asc_reader
@@ -29,15 +27,22 @@ header.xllcorner
 header.yllcorner
 header.cellsize 
 header.nodata
-header.upperrightcentrex
-header.upperrightcentrey
+header.xulcentre
+header.yulcentre
+header.xlrcentre
+header.ylrcentre
 ```
 
 
-Data can be loaded into numpy using the following code.
+Data can be loaded into numpy using the following code np.loadtxt, then it can be loaded into netCDF from there. The example below has three dimentions time, lat and lon.
 
 ```
-np.loadtxt(filename, skiprows=6)
+from netCDF4 import Dataset
+netcdf_file = Dataset("test1.nc", "a")
+time_variable[0] = 0
+data = np.loadtxt('filename', skiprows=6)
+my_variable[0,:,:] = data
+netcdf_file.close()
 ```
 
 # Credits #

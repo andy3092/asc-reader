@@ -31,11 +31,17 @@ def test_read_header_nodata():
     assert(testfile.nodata == -9999.0)
     assert(linztestfile.nodata == -9999.0)
 
-def test_read_header_upperrightcentrex():
-    assert(testfile.upperrightcentrex == 166.025)
-    assert(linztestfile.upperrightcentrex == 174.818023629691)
+def test_read_header_xurcentre():
+    assert(testfile.xulcentre == 166.025)
+    assert(linztestfile.xulcentre == 174.818023629691)
 
-def test_read_header_upperrightcentrey():
-    assert(testfile.upperrightcentrey == -47.475)
+def test_read_header_yulcentre():
+    assert(testfile.yulcentre == -47.475)
+
+def test_read_header_xlrcentre():
+    assert(testfile.xlrcentre == 166.125)
+
+def test_read_header_ylrcentre():
+    assert(testfile.ylrcentre == -47.575)
 
 

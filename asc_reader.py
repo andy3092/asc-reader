@@ -9,8 +9,9 @@ def readheader(filename):
     a = read_header('myfile.asc')
     a.cellsize ...
     """
-    tuplefields = ('ncols nrows xllcorner yllcorner cellsize '
-                    'nodata upperrightcentrex upperrightcentrey')
+    tuplefields = ('ncols nrows xllcorner yllcorner cellsize nodata '
+                   'xulcentre yulcentre xlrcentre ylrcentre')
+    
     Header = collections.namedtuple('Header', tuplefields)
     ncols = int(linecache.getline(filename, 1).split()[1])
     nrows = int(linecache.getline(filename, 2).split()[1])
@@ -19,16 +20,20 @@ def readheader(filename):
     cellsize = float(linecache.getline(filename, 5).split()[1])
     nodata = float(linecache.getline(filename, 6).split()[1])
 
-    # Caalulate the centre of the upper right cell. 
-    upperrightcentrex = xllcorner + (cellsize /2)
     gridheight = nrows * cellsize
-    upperrightcentrey = yllcorner - (cellsize / 2) + gridheight
+    gridwidth = ncols * cellsize
+
+    xulcentre = xllcorner + (cellsize / 2)
+    yulcentre = yllcorner - (cellsize / 2) + gridheight
+    xlrcentre = xllcorner - (cellsize / 2) + gridwidth
+    ylrcentre = yllcorner + (cellsize / 2)
+
 
     return Header(ncols=ncols, nrows=nrows,
                   xllcorner=xllcorner, yllcorner=yllcorner,
                   cellsize=cellsize, nodata=nodata,
-                  upperrightcentrex=upperrightcentrex,
-                  upperrightcentrey=upperrightcentrey)
+                  xulcentre=xulcentre, yulcentre=yulcentre,
+                  xlrcentre=xlrcentre, ylrcentre=ylrcentre)
 
 
 
