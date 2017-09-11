@@ -22,7 +22,8 @@ header.nrows
 ```
 Information you can access.
 
-headr.ncols
+```
+header.ncols
 header.nrows
 header.xllcorner
 header.yllcorner
@@ -30,8 +31,14 @@ header.cellsize
 header.nodata
 header.upperrightcentrex
 header.upperrightcentrey
+```
 
 
+Data can be loaded into numpy using the following code.
+
+```
+np.loadtxt(filename, skiprows=6)
+```
 
 # Credits #
 Some test data provided by Wellington Regional Counicl and Landcare New Zealand under creative commons license. 

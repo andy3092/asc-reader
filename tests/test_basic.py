@@ -6,8 +6,6 @@ testfile = asc_reader.readheader('../data/test_data.asc')
 linztestfile = asc_reader.readheader(
     '../data/wellington-lidar-1m-dem-2013.asc')
 
-ascfile = asc_reader.AscFile('../data/test_data.asc')
-
 def tessst_read_header_ncols():
     assert(testfile.ncols == 3)
     assert(linztestfile.ncols == 398)
@@ -39,11 +37,5 @@ def test_read_header_upperrightcentrex():
 
 def test_read_header_upperrightcentrey():
     assert(testfile.upperrightcentrey == -47.475)
-    #assert(linztestfile.upperrightcentrey == )
 
-def test_AscFile_data():
-    assert(ascfile.data.size == 9)
-    assert(ascfile.data.shape == (3, 3))
-    #assert(asctestfile.data.size == 114226)
-    #assert(asclinztestfile.data.shape == (287, 398))
 

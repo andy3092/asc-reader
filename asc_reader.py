@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 import linecache
 import collections
-import numpy as np
-
 
 def readheader(filename):
     """
     Takes a file name and reads the header of the file
     First implemented as a named tuple. So you can call 
     a = read_header('myfile.asc')
-    a.cellsize etc.
+    a.cellsize ...
     """
     tuplefields = ('ncols nrows xllcorner yllcorner cellsize '
                     'nodata upperrightcentrex upperrightcentrey')
@@ -32,16 +30,6 @@ def readheader(filename):
                   upperrightcentrex=upperrightcentrex,
                   upperrightcentrey=upperrightcentrey)
 
-class AscFile(object):
-    """
-    This class reads in an Ascii grid data
-    Will read in the header and the data
-    AscFile(filename)
-    """
-
-    def __init__(self, filename):
-        self.header = readheader(filename)
-        self.data = np.loadtxt(filename, skiprows=6)
 
 
 
