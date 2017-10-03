@@ -33,17 +33,28 @@ header.xlrcentre
 header.ylrcentre
 ```
 
+There is a function that has been created to add the data to an existing NetCDF file. The function will also take gzip files as well and load them into the netCDF file.
 
-Data can be loaded into numpy using the following code np.loadtxt, then put intoa netCDF file. The example below has three dimentions time, lat and lon.
+addasc2nc
+It takes four arguments are:
+    filename: an asc to add to the netcdf file
+    netcdf file handle: an open netCDF Dataset object
+    variable: the variable in the netCDF dataset you want to add to e.g. rain
+    time delta: the number of days since the start date of the netcdf file.
 
 ```
+import asc_reader
 from netCDF4 import Dataset
-netcdf_file = Dataset("my_netcdf.nc", "a")
-netcdf_file.variables['time'][0] = 0
-data = np.loadtxt('filename', skiprows=6)
-netcdf_file.variables['my_variable'][0,:,:] = data
-netcdf_file.close()
+
+ascfile = 'testdata0.asc'
+ncfilehandle = Dataset('test.nc', 'a')
+variable = 'rain'
+timedelta = 0 # first piece of data in the time dimention
+
+asc_reader.addasc2nc(ascfile, ncfilehandle, variable, timedelta)
+ncfilehandle.close()
 ```
+
 
 # Credits #
 Some test data provided by Wellington Regional Counicl and Landcare New Zealand under creative commons license. 
