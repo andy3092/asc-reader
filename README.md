@@ -34,7 +34,7 @@ header.ylrcentre
 ```
 
 
-Data can be loaded into numpy using the following code np.loadtxt, then it can be loaded into netCDF from there. The example below has three dimentions time, lat and lon.
+Data can be loaded into numpy using the following code np.loadtxt, then put intoa netCDF file. The example below has three dimentions time, lat and lon.
 
 ```
 from netCDF4 import Dataset
