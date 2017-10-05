@@ -2,18 +2,18 @@
 import linecache
 import collections
 import numpy as np
-from netCDF4 import Dataset
+
 
 def readheader(filename):
     """
     Takes a file name and reads the header of the file
-    First implemented as a named tuple. So you can call 
+    First implemented as a named tuple. So you can call
     a = read_header('myfile.asc')
     a.cellsize ...
     """
     tuplefields = ('ncols nrows xllcorner yllcorner cellsize nodata '
                    'xulcentre yulcentre xlrcentre ylrcentre')
-    
+
     Header = collections.namedtuple('Header', tuplefields)
     ncols = int(linecache.getline(filename, 1).split()[1])
     nrows = int(linecache.getline(filename, 2).split()[1])
@@ -36,12 +36,13 @@ def readheader(filename):
                   xulcentre=xulcentre, yulcentre=yulcentre,
                   xlrcentre=xlrcentre, ylrcentre=ylrcentre)
 
+
 def addasc2nc(filename, ncfilenamehandle, variable, timedelta):
     """
-    Takes an ascfile and copies it into a netCDF file. 
-    The netCDF file must already exist and be open. 
-    You will need to know the number of days since the first day in the 
-    netcdf file. 
+    Takes an ascfile and copies it into a netCDF file.
+    The netCDF file must already exist and be open.
+    You will need to know the number of days since the first day in the
+    netcdf file.
     filename file: name of the ascfile
     ncfilehandle:  an open netCDF Dataset object
     variable:     name in the netCDF dataset you want to add to e.g. rain
@@ -50,5 +51,5 @@ def addasc2nc(filename, ncfilenamehandle, variable, timedelta):
 
     ncfilenamehandle.variables['time'][timedelta] = timedelta
     data = np.loadtxt(filename, skiprows=6)
-    ncfilenamehandle.variables[variable][timedelta,:,:] = data
+    ncfilenamehandle.variables[variable][timedelta, :, :] = data
     return
