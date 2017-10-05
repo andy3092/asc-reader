@@ -48,7 +48,6 @@ def addasc2nc(filename, ncfilenamehandle, variable, timedelta):
     variable:     name in the netCDF dataset you want to add to e.g. rain
     timedelta:    the number of days since the start date of the netcdf file.
     """
-
     ncfilenamehandle.variables['time'][timedelta] = timedelta
     data = np.loadtxt(filename, skiprows=6)
     ncfilenamehandle.variables[variable][timedelta, :, :] = data
