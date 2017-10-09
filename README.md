@@ -9,7 +9,7 @@ There is a simple function to read the header and spits out a named tuple.
 ```
 import asc_reader
 
-header = asc_reader.read_header('../data/test_data.asc')
+header = asc2netcdf.read_header('../data/test_data.asc')
 
 header.cellsize
 0.05
@@ -43,7 +43,7 @@ It takes four arguments are:
     time delta: the number of days since the start date of the netcdf file.
 
 ```
-import asc_reader
+import asc2netcdf
 from netCDF4 import Dataset
 
 ascfile = 'testdata0.asc'
