@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
 from netCDF4 import Dataset
-from context import asc_reader
+from context import asc2netcdf
 import numpy as np
 
 testbasename = '../data/testdata'
-testfile = asc_reader.readheader('../data/test_data.asc')
+testfile = asc2netcdf.readheader('../data/test_data.asc')
 netCDFfile = '../data/test.nc'
 
 # Need to copy file template over before starting test
-linztestfile = asc_reader.readheader(
+linztestfile = asc2netcdf.readheader(
     '../data/wellington-lidar-1m-dem-2013.asc')
 
 
@@ -64,7 +64,7 @@ def test_addasc2nc():
     netCDFfilehandle = Dataset(netCDFfile, 'a')
     for i in range(4):
         testfilename = testbasename + '%d.asc' % (i)
-        asc_reader.addasc2nc(testfilename, netCDFfilehandle, "rain", i)
+        asc2netcdf.addasc2nc(testfilename, netCDFfilehandle, "rain", i)
     netCDFfilehandle.close()
     ncfile = Dataset(netCDFfile, 'r')
     assert(ncfile.dimensions.get('time').size == 4)

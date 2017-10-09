@@ -1,4 +1,4 @@
-# asc-reader
+# asc2netcdf
 Reads in asc grid files acts as a simple driver that parses ascii grid data.
 Mainly used to read in the asc header data to.
 
