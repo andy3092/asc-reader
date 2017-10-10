@@ -4,13 +4,13 @@ from netCDF4 import Dataset
 from context import asc2netcdf
 import numpy as np
 
-testbasename = '../data/testdata'
-testfile = asc2netcdf.readheader('../data/test_data.asc')
-netCDFfile = '../data/test.nc'
+testbasename = 'data/testdata'
+testfile = asc2netcdf.readheader('data/test_data.asc')
+netCDFfile = 'data/test.nc'
 
 # Need to copy file template over before starting test
 linztestfile = asc2netcdf.readheader(
-    '../data/wellington-lidar-1m-dem-2013.asc')
+    'data/wellington-lidar-1m-dem-2013.asc')
 
 
 def tessst_read_header_ncols():
