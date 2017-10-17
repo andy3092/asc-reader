@@ -12,7 +12,8 @@ def readheader(filename):
     a.cellsize ...
     """
     tuplefields = ('ncols nrows xllcorner yllcorner cellsize nodata '
-                   'xulcentre yulcentre xlrcentre ylrcentre')
+                   'xulcentre yulcentre xlrcentre ylrcentre '
+                   'xmin xmax ymin ymax')
 
     Header = collections.namedtuple('Header', tuplefields)
     ncols = int(linecache.getline(filename, 1).split()[1])
@@ -34,7 +35,9 @@ def readheader(filename):
                   xllcorner=xllcorner, yllcorner=yllcorner,
                   cellsize=cellsize, nodata=nodata,
                   xulcentre=xulcentre, yulcentre=yulcentre,
-                  xlrcentre=xlrcentre, ylrcentre=ylrcentre)
+                  xlrcentre=xlrcentre, ylrcentre=ylrcentre,
+                  xmin=xlrcentre, xmax=xulcentre,
+                  ymin=ylrcentre, ymax=yulcentre)
 
 
 def addasc2nc(filename, ncfilenamehandle, variable, timedelta):
