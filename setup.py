@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 setup(name='asc2netcdf',
-      version='0.1',
+      version='0.2',
       description='Reads asc data into netCDF files',
       long_description=('The script was written to access the header and to \
       calculate the upper right corner centre of a grid. Some information \

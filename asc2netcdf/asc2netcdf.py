@@ -12,7 +12,7 @@ def readheader(filename):
     a.cellsize ...
     """
     tuplefields = ('ncols nrows xllcorner yllcorner cellsize nodata '
-                   'xulcentre yulcentre xlrcentre ylrcentre '
+                   'xmax_centre ymax_centre xmin_centre ymin_centre '
                    'xmin xmax ymin ymax')
 
     Header = collections.namedtuple('Header', tuplefields)
@@ -26,18 +26,23 @@ def readheader(filename):
     gridheight = nrows * cellsize
     gridwidth = ncols * cellsize
 
-    xulcentre = xllcorner + (cellsize / 2)
-    yulcentre = yllcorner - (cellsize / 2) + gridheight
-    xlrcentre = xllcorner - (cellsize / 2) + gridwidth
-    ylrcentre = yllcorner + (cellsize / 2)
+    # Calculate the max values for x and y
+    
+    ymax = yllcorner + gridheight
+    xmax = xllcorner + gridwidth
+    
+    # Find the centre point for the min and max values
+    xmin_centre = xllcorner + (cellsize / 2)
+    ymax_centre = yllcorner - (cellsize / 2) + gridheight
+    xmax_centre = xllcorner - (cellsize / 2) + gridwidth
+    ymin_centre = yllcorner + (cellsize / 2)
 
     return Header(ncols=ncols, nrows=nrows,
                   xllcorner=xllcorner, yllcorner=yllcorner,
                   cellsize=cellsize, nodata=nodata,
-                  xulcentre=xulcentre, yulcentre=yulcentre,
-                  xlrcentre=xlrcentre, ylrcentre=ylrcentre,
-                  xmin=xlrcentre, xmax=xulcentre,
-                  ymin=ylrcentre, ymax=yulcentre)
+                  xmax_centre=xmax_centre, ymax_centre=ymax_centre,
+                  xmin_centre=xmin_centre, ymin_centre=ymin_centre,
+                  xmin=xllcorner, xmax=xmax, ymin=yllcorner, ymax=ymax)
 
 
 def addasc2nc(filename, ncfilenamehandle, variable, timedelta):

@@ -22,43 +22,62 @@ def test_read_header_nrows():
     assert(testfile.nrows == 3)
     assert(linztestfile.nrows == 287)
 
+           
+def test_read_header_cellsize():
+    assert(testfile.cellsize == 0.05)
+    assert(linztestfile.cellsize == 0.000010273382)
+
 
 def test_read_header_xllcorner():
     assert(testfile.xllcorner == 166.00)
     assert(linztestfile.xllcorner == 174.818018493000)
 
+    
+def test_read_header_xmin():
+    assert(testfile.xmin == 166.00)
+    assert(linztestfile.xmin == 174.818018493000)
+
+
+def test_read_header_xmax():
+    assert(testfile.xmax == 166.150)
+    
 
 def test_read_header_yllcorner():
     assert(testfile.yllcorner == -47.600000000000)
     assert(linztestfile.yllcorner == -41.313597643208)
 
 
-def test_read_header_cellsize():
-    assert(testfile.cellsize == 0.05)
-    assert(linztestfile.cellsize == 0.000010273382)
+def test_read_header_ymin():
+    assert(testfile.ymin == -47.600000000000)
+    assert(linztestfile.ymin == -41.313597643208)
 
 
+def test_read_header_ymax():
+    assert(testfile.ymax == -47.4500000000000)
+
+    
 def test_read_header_nodata():
     assert(testfile.nodata == -9999.0)
     assert(linztestfile.nodata == -9999.0)
 
 
-def test_read_header_xurcentre():
-    assert(testfile.xulcentre == 166.025)
-    assert(linztestfile.xulcentre == 174.818023629691)
+def test_read_header_xmax_centre():
+    assert(testfile.xmax_centre == 166.125)
+    assert(linztestfile.xmax_centre == 174.82210216234503)
+    assert(testfile.xmax_centre > testfile.xmin_centre)
 
 
-def test_read_header_yulcentre():
-    assert(testfile.yulcentre == -47.475)
+def test_read_header_ymax_centre():
+    assert(testfile.ymax_centre == -47.475)
+    assert(testfile.ymax_centre > testfile.ymin_centre)
 
+def test_read_header_xmin_centre():
+    assert(testfile.xmin_centre == 166.025)
+    assert(testfile.xmin_centre < testfile.xmax_centre)
 
-def test_read_header_xlrcentre():
-    assert(testfile.xlrcentre == 166.125)
-
-
-def test_read_header_ylrcentre():
-    assert(testfile.ylrcentre == -47.575)
-
+def test_read_header_ymin_centre():
+    assert(testfile.ymin_centre == -47.575)
+    assert(testfile.ymin_centre < testfile.ymax_centre)
 
 def test_addasc2nc():
     netCDFfilehandle = Dataset(netCDFfile, 'a')
