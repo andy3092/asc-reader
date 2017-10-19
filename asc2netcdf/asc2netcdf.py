@@ -33,8 +33,8 @@ def readheader(filename):
     
     # Find the center point for the min and max values
     xmin_center = xllcorner + (cellsize / 2)
-    ymax_center = yllcorner - (cellsize / 2) + gridheight
-    xmax_center = xllcorner - (cellsize / 2) + gridwidth
+    ymax_center = ymax - (cellsize / 2)
+    xmax_center = xmax - (cellsize / 2)
     ymin_center = yllcorner + (cellsize / 2)
 
     return Header(ncols=ncols, nrows=nrows,
