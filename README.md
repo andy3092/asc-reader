@@ -31,10 +31,10 @@ header.xmax
 header.ymax
 header.xmin
 header.ymin
-header.xmax_centre
-header.ymax_centre
-header.xmin_centre
-header.ymax_centre
+header.xmax_center
+header.ymax_center
+header.xmin_center
+header.ymax_center
 ```
 
 There is a function that has been created to add the data to an existing NetCDF file. The function will also take gzip files as well and load them into the netCDF file.

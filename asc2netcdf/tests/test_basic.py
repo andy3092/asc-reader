@@ -61,23 +61,23 @@ def test_read_header_nodata():
     assert(linztestfile.nodata == -9999.0)
 
 
-def test_read_header_xmax_centre():
-    assert(testfile.xmax_centre == 166.125)
-    assert(linztestfile.xmax_centre == 174.82210216234503)
-    assert(testfile.xmax_centre > testfile.xmin_centre)
+def test_read_header_xmax_center():
+    assert(testfile.xmax_center == 166.125)
+    assert(linztestfile.xmax_center == 174.82210216234503)
+    assert(testfile.xmax_center > testfile.xmin_center)
 
 
-def test_read_header_ymax_centre():
-    assert(testfile.ymax_centre == -47.475)
-    assert(testfile.ymax_centre > testfile.ymin_centre)
+def test_read_header_ymax_center():
+    assert(testfile.ymax_center == -47.475)
+    assert(testfile.ymax_center > testfile.ymin_center)
 
-def test_read_header_xmin_centre():
-    assert(testfile.xmin_centre == 166.025)
-    assert(testfile.xmin_centre < testfile.xmax_centre)
+def test_read_header_xmin_center():
+    assert(testfile.xmin_center == 166.025)
+    assert(testfile.xmin_center < testfile.xmax_center)
 
-def test_read_header_ymin_centre():
-    assert(testfile.ymin_centre == -47.575)
-    assert(testfile.ymin_centre < testfile.ymax_centre)
+def test_read_header_ymin_center():
+    assert(testfile.ymin_center == -47.575)
+    assert(testfile.ymin_center < testfile.ymax_center)
 
 def test_addasc2nc():
     netCDFfilehandle = Dataset(netCDFfile, 'a')

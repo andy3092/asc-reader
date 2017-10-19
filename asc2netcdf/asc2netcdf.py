@@ -12,7 +12,7 @@ def readheader(filename):
     a.cellsize ...
     """
     tuplefields = ('ncols nrows xllcorner yllcorner cellsize nodata '
-                   'xmax_centre ymax_centre xmin_centre ymin_centre '
+                   'xmax_center ymax_center xmin_center ymin_center '
                    'xmin xmax ymin ymax')
 
     Header = collections.namedtuple('Header', tuplefields)
@@ -31,17 +31,17 @@ def readheader(filename):
     ymax = yllcorner + gridheight
     xmax = xllcorner + gridwidth
     
-    # Find the centre point for the min and max values
-    xmin_centre = xllcorner + (cellsize / 2)
-    ymax_centre = yllcorner - (cellsize / 2) + gridheight
-    xmax_centre = xllcorner - (cellsize / 2) + gridwidth
-    ymin_centre = yllcorner + (cellsize / 2)
+    # Find the center point for the min and max values
+    xmin_center = xllcorner + (cellsize / 2)
+    ymax_center = yllcorner - (cellsize / 2) + gridheight
+    xmax_center = xllcorner - (cellsize / 2) + gridwidth
+    ymin_center = yllcorner + (cellsize / 2)
 
     return Header(ncols=ncols, nrows=nrows,
                   xllcorner=xllcorner, yllcorner=yllcorner,
                   cellsize=cellsize, nodata=nodata,
-                  xmax_centre=xmax_centre, ymax_centre=ymax_centre,
-                  xmin_centre=xmin_centre, ymin_centre=ymin_centre,
+                  xmax_center=xmax_center, ymax_center=ymax_center,
+                  xmin_center=xmin_center, ymin_center=ymin_center,
                   xmin=xllcorner, xmax=xmax, ymin=yllcorner, ymax=ymax)
 
 
