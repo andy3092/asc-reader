@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 from netCDF4 import Dataset
 from context import asc2netcdf
 import numpy as np
@@ -50,11 +51,11 @@ def test_read_header_yllcorner():
 def test_read_header_ymin():
     assert(testfile.ymin == -47.600000000000)
     assert(linztestfile.ymin == -41.313597643208)
-
+    assert(testfile.ymin < testfile.ymax)
 
 def test_read_header_ymax():
     assert(testfile.ymax == -47.4500000000000)
-
+    assert(testfile.ymax > testfile.ymin)
     
 def test_read_header_nodata():
     assert(testfile.nodata == -9999.0)
@@ -79,16 +80,17 @@ def test_read_header_ymin_center():
     assert(testfile.ymin_center == -47.575)
     assert(testfile.ymin_center < testfile.ymax_center)
 
-def test_addasc2nc():
-    netCDFfilehandle = Dataset(netCDFfile, 'a')
-    for i in range(4):
-        testfilename = testbasename + '%d.asc' % (i)
-        asc2netcdf.addasc2nc(testfilename, netCDFfilehandle, "rain", i)
-    netCDFfilehandle.close()
-    ncfile = Dataset(netCDFfile, 'r')
-    assert(ncfile.dimensions.get('time').size == 4)
-    ncfile.close()
-
+def test_create_nc():
+    template = testbasename + '1.asc'
+    testfile = 'testfile.nc'
+    asc2netcdf.create_nc(testfile, template, 'days since 1960-1-1')
+    ncfile = Dataset(testfile, 'r')
+    #lat = ncfile.variable.get('lat')
+    #lon = ncfile.variable.get('lon')
+    #assert(lat.size == 271)
+    #assert(lon.size == 279)
+    os.remove(testfile)
+    
 
 def test_addasc2ncdata():
     for i in range(4):
