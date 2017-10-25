@@ -9,6 +9,7 @@ testbasename = 'data/testdata'
 testfile = asc2netcdf.readheader('data/test_data.asc')
 netCDFfile = 'data/test.nc'
 
+
 # Need to copy file template over before starting test
 linztestfile = asc2netcdf.readheader(
     'data/wellington-lidar-1m-dem-2013.asc')
@@ -85,12 +86,21 @@ def test_create_nc():
     testfile = 'testfile.nc'
     asc2netcdf.create_nc(testfile, template, 'days since 1960-1-1')
     ncfile = Dataset(testfile, 'r')
-    #lat = ncfile.variable.get('lat')
-    #lon = ncfile.variable.get('lon')
-    #assert(lat.size == 271)
-    #assert(lon.size == 279)
+    lat = ncfile.variables['lat'][:]
+    lon = ncfile.variables['lon'][:]
+
+    # check the number of columns
+    assert(lat.size == 271)
+    assert(lon.size == 279)
+
+    # assert min and max values for lat
+    np.testing.assert_allclose(lat.max(), -34.075)
+    np.testing.assert_allclose(lat.min(), -47.575)
+
+    # assert min and max values for lon
+    np.testing.assert_allclose(lon.min(), 166.025)
+    np.testing.assert_allclose(lon.max(), 179.925)
     os.remove(testfile)
-    
 
 def test_addasc2ncdata():
     for i in range(4):
@@ -98,8 +108,8 @@ def test_addasc2ncdata():
         data = np.loadtxt(testfilename, skiprows=6)
         ncfile = Dataset(netCDFfile, 'r')
         ncdata = ncfile.variables['rain'][i, :, :]
-        # rounding is slightly diffrent 5 from the netCDF and
-        # 8 from reading in the numpy file so need to use the
-        # numpy testing
+        
+
+        # Check the arrays match 
         np.testing.assert_array_almost_equal(ncdata, data)
     ncfile.close()

@@ -46,7 +46,8 @@ def readheader(filename):
                   xmin=xllcorner, xmax=xmax, ymin=yllcorner, ymax=ymax)
 
 
-def create_nc(filename, template, start_time, x='lon', y='lat'):
+def create_nc(filename, template, start_time, x='lon', y='lat',
+              y_units='degrees_south', x_units='degrees_east'):
     """
     Creates an nc file which uses an asc file as a template to create the
     dimentions of the new file.
@@ -60,34 +61,34 @@ def create_nc(filename, template, start_time, x='lon', y='lat'):
     asc_header = readheader(template)
     rootgrp = Dataset(filename, "w", format="NETCDF4")
     
-    # dimentions
-    time_dimention = rootgrp.createDimension('time', None)
-    lat_dimention = rootgrp.createDimension(y, asc_header.nrows)
-    lon_dimention = rootgrp.createDimension(x, asc_header.ncols)
+    # create the dimentions
+    rootgrp.createDimension('time', None) # time
+    rootgrp.createDimension(y, asc_header.nrows) # y
+    rootgrp.createDimension(x, asc_header.ncols) # x
 
-    # variables
+    # create the variables
     time_variable = rootgrp.createVariable('time', 'f8', ('time',))
-    lat_variable = rootgrp.createVariable(y, 'f4',(y,))
-    lon_variable = rootgrp.createVariable(x, 'f4',(x,))
+    y_variable = rootgrp.createVariable(y, 'f4',(y,))
+    x_variable = rootgrp.createVariable(x, 'f4',(x,))
 
     # variable metadata
-    lat_variable.units = 'degrees_south'
-    lon_variable.units = 'degrees_east'
+    y_variable.units = y_units
+    x_variable.units = x_units
     time_variable.units = start_time
     rootgrp.history = 'Created ' + time.ctime(time.time())
 
     # Inatise the lat long data
     # need to add the cell size
-    lon = np.linspace(asc_header.xmin_center,
+    x_coordinates = np.linspace(asc_header.xmin_center,
                       asc_header.xmax_center,
                       asc_header.ncols)
     
-    lat = np.linspace(asc_header.ymax_center,
+    y_coordinates = np.linspace(asc_header.ymax_center,
                       asc_header.ymin_center,
                       asc_header.nrows)
 
-    lat_variable[:] = lat
-    lon_variable[:] = lon
+    y_variable[:] = y_coordinates
+    x_variable[:] = x_coordinates
     rootgrp.close()
 
     
