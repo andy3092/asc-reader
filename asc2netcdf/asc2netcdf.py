@@ -47,7 +47,7 @@ def readheader(filename):
 
 
 def create_nc(filename, template, start_time, x='lon', y='lat',
-              y_units='degrees_south', x_units='degrees_east'):
+              y_units='degrees_north', x_units='degrees_east'):
     """
     Creates an nc file which uses an asc file as a template to create the
     dimentions of the new file.
