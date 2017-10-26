@@ -84,11 +84,14 @@ def test_read_header_ymin_center():
 def test_create_nc():
     template = testbasename + '1.asc'
     testfile = 'testfile.nc'
-    asc2netcdf.create_nc(testfile, template, 'days since 1960-1-1')
+    asc2netcdf.create_nc(testfile, template, 'Test', 'days since 1960-1-1')
     ncfile = Dataset(testfile, 'r')
     lat = ncfile.variables['lat'][:]
     lon = ncfile.variables['lon'][:]
 
+    # check the title
+    assert(ncfile.title == 'Test')
+    
     # check the number of columns
     assert(lat.size == 271)
     assert(lon.size == 279)
@@ -100,7 +103,7 @@ def test_create_nc():
     # assert min and max values for lon
     np.testing.assert_allclose(lon.min(), 166.025)
     np.testing.assert_allclose(lon.max(), 179.925)
-    os.remove(testfile)
+    #os.remove(testfile)
 
 def test_addasc2ncdata():
     for i in range(4):

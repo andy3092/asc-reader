@@ -2,6 +2,8 @@
 import linecache
 import collections
 import time
+import platform
+import getpass
 import numpy as np
 from netCDF4 import Dataset
 
@@ -46,21 +48,37 @@ def readheader(filename):
                   xmin=xllcorner, xmax=xmax, ymin=yllcorner, ymax=ymax)
 
 
-def create_nc(filename, template, start_time, x='lon', y='lat',
+def create_nc(filename, template, title, start_time, x='lon', y='lat',
               y_units='degrees_north', x_units='degrees_east'):
     """
     Creates an nc file which uses an asc file as a template to create the
-    dimentions of the new file.
+    dimentions of the new file. The file will contain a bare bones netCDF file.
 
-    filename    the name of the new netCDF file to be created.
-    template    name of the file to be used create the location information
-                and the dimentions for the netCDF file.
-    start_time  the start time of the netCDF file.
+    filename:
+            The name of the new netCDF file to be created.
+    template: 
+            Name of the file to be used create the location information
+            and the dimentions for the netCDF file.
+    title:
+            Title of the NetCDF file
+    start_time:  
+            Start time of the netCDF file.
+
+    Extra metadata will need to be added to the file. 
     """
     # Create netcdf file
     asc_header = readheader(template)
     rootgrp = Dataset(filename, "w", format="NETCDF4")
-    
+
+    # Add general metadata to the file.
+    rootgrp.history = 'Created ' + time.ctime(time.time())
+    rootgrp.history = rootgrp.history + ' OS: ' +  platform.platform()
+    rootgrp.history = rootgrp.history + ' User: ' +  getpass.getuser()
+    rootgrp.title = title
+    rootgrp.source = ('Created with ' + __name__ + ' using ' +
+                      template + 'as a template.')
+    rootgrp.conventions = 'CF-1.6'
+
     # create the dimentions
     rootgrp.createDimension('time', None) # time
     rootgrp.createDimension(y, asc_header.nrows) # y
@@ -75,8 +93,8 @@ def create_nc(filename, template, start_time, x='lon', y='lat',
     y_variable.units = y_units
     x_variable.units = x_units
     time_variable.units = start_time
-    rootgrp.history = 'Created ' + time.ctime(time.time())
-
+    time_variable.calendar = "gregorian"
+    
     # Inatise the lat long data
     # need to add the cell size
     x_coordinates = np.linspace(asc_header.xmin_center,
