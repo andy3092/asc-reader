@@ -103,7 +103,7 @@ def test_create_nc():
     # assert min and max values for lon
     np.testing.assert_allclose(lon.min(), 166.025)
     np.testing.assert_allclose(lon.max(), 179.925)
-    #os.remove(testfile)
+    os.remove(testfile)
 
 def test_addasc2ncdata():
     for i in range(4):

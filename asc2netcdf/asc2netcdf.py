@@ -49,6 +49,7 @@ def readheader(filename):
 
 
 def create_nc(filename, template, title, start_time, x='lon', y='lat',
+              x_standard_name='longitude', y_standard_name='latitude',
               y_units='degrees_north', x_units='degrees_east'):
     """
     Creates an nc file which uses an asc file as a template to create the
@@ -80,18 +81,20 @@ def create_nc(filename, template, title, start_time, x='lon', y='lat',
     rootgrp.conventions = 'CF-1.6'
 
     # create the dimentions
-    rootgrp.createDimension('time', None) # time
-    rootgrp.createDimension(y, asc_header.nrows) # y
     rootgrp.createDimension(x, asc_header.ncols) # x
+    rootgrp.createDimension(y, asc_header.nrows) # y
+    rootgrp.createDimension('time', None) # time
 
     # create the variables
-    time_variable = rootgrp.createVariable('time', 'f8', ('time',))
-    y_variable = rootgrp.createVariable(y, 'f4',(y,))
     x_variable = rootgrp.createVariable(x, 'f4',(x,))
+    y_variable = rootgrp.createVariable(y, 'f4',(y,))
+    time_variable = rootgrp.createVariable('time', 'f8', ('time',))
 
     # variable metadata
-    y_variable.units = y_units
     x_variable.units = x_units
+    y_variable.units = y_units
+    x_variable.standard_name = x_standard_name
+    y_variable.standard_name = y_standard_name
     time_variable.units = start_time
     time_variable.calendar = "gregorian"
     
