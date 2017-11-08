@@ -127,6 +127,6 @@ def addasc2nc(filename, ncfilenamehandle, variable, timedelta, skipheader=6):
                 specified. So the header is only 5 rows instead of 6.
     """
     ncfilenamehandle.variables['time'][timedelta] = timedelta
-    data = np.loadtxt(filename, skiprows=skiprows)
+    data = np.loadtxt(filename, skiprows=skipheader)
     ncfilenamehandle.variables[variable][timedelta, :, :] = data
     return
