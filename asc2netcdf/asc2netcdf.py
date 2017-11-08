@@ -113,7 +113,7 @@ def create_nc(filename, template, title, start_time, x='lon', y='lat',
     rootgrp.close()
 
     
-def addasc2nc(filename, ncfilenamehandle, variable, timedelta):
+def addasc2nc(filename, ncfilenamehandle, variable, timedelta, skipheader=6):
     """
     Takes an ascfile and copies it into a netCDF file.
     The netCDF file must already exist and be open.
@@ -123,8 +123,10 @@ def addasc2nc(filename, ncfilenamehandle, variable, timedelta):
     ncfilehandle:  an open netCDF Dataset object
     variable:     name in the netCDF dataset you want to add to e.g. rain
     timedelta:    the number of days since the start date of the netcdf file.
+    skipheader: number of rows to skip for the header. Sometimes NODATA is not 
+                specified. So the header is only 5 rows instead of 6.
     """
     ncfilenamehandle.variables['time'][timedelta] = timedelta
-    data = np.loadtxt(filename, skiprows=6)
+    data = np.loadtxt(filename, skiprows=skiprows)
     ncfilenamehandle.variables[variable][timedelta, :, :] = data
     return
